@@ -70,6 +70,13 @@
   .entry { margin-bottom: 14px; }
   .entry .what { font-weight: 600; }
   .entry .where, .entry .when { color: var(--muted); font-size: 15px; }
+  .mail-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  button.copy {
+    font: inherit; font-size: 13px; padding: 3px 10px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  }
+  button.copy:hover { border-color: var(--accent); color: var(--accent); }
   footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 14px; }
 
   @media (max-width: 640px) {
@@ -107,7 +114,7 @@
       <a href="https://scholar.google.com/citations?user=msFfzqEAAAAJ">Google Scholar</a>
       <a href="https://orcid.org/0009-0000-4338-8728">ORCID</a>
       <a href="https://github.com/bykang2015">GitHub</a>
-      <a href="mailto:boyoung.kang@skku.edu">Email</a>
+      <a href="#contact">Email</a>
     </div>
   </header>
 
@@ -190,15 +197,29 @@
 
   <section id="contact">
     <h2>Contact</h2>
-    <p>Department of Applied Artificial Intelligence, Sungkyunkwan University, Seoul, Republic of Korea<br>
-    <a href="mailto:boyoung.kang@skku.edu">boyoung.kang@skku.edu</a> (university)<br>
-    <a href="mailto:bykang2015@gmail.com">bykang2015@gmail.com</a> (personal)</p>
+    <p>Department of Applied Artificial Intelligence, Sungkyunkwan University, Seoul, Republic of Korea</p>
+    <div class="mail-row"><a href="mailto:boyoung.kang@skku.edu">boyoung.kang@skku.edu</a> <span class="muted">(university)</span> <button class="copy" data-email="boyoung.kang@skku.edu">Copy</button></div>
+    <div class="mail-row"><a href="mailto:bykang2015@gmail.com">bykang2015@gmail.com</a> <span class="muted">(personal)</span> <button class="copy" data-email="bykang2015@gmail.com">Copy</button></div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">© 2026 Boyoung Kang · Last updated November 2026</div>
 </footer>
+
+<script>
+  document.querySelectorAll('button.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var email = btn.getAttribute('data-email');
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1500); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(done, function () { window.prompt('Copy this email address:', email); });
+      } else {
+        window.prompt('Copy this email address:', email);
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
